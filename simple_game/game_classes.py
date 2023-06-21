@@ -33,4 +33,27 @@ class Being():
     
     def change_health(self, amount):
         self.health += amount
+
+class Human(Being):
+    def __init__(self, name, being_class):
+        super().__init__(name, being_class)
+        self.experience = 0
+        self.gold = 0
+        
+
     
+    def get_experience(self):
+        return self.experience
+    
+    def change_experience(self, value):
+        self.experience += value
+    
+    def get_gold(self):
+        return self.gold
+    
+    def change_gold(self, value):
+        self.gold += value
+
+
+user = Human("Lance", "wizard")
+
