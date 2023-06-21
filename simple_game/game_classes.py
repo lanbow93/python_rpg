@@ -5,9 +5,8 @@ class Being():
     def __init__(self, name, being_class):
         self.name = name
         self.being_class = being_class
-        print(type(getattr(creature, being_class)))
-        self.weapon = getattr(creature, being_class)[0]
-        self.armor = getattr(creature, being_class)[1]
+        self.weapon = creature[being_class][0]
+        self.armor = creature[being_class][1]
 
     def get_name(self):
         return self.name
