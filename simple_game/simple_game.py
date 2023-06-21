@@ -1,3 +1,9 @@
+from game_classes import Being
+
+user = Being("Lance", "wizard")
+
+print(f"Name: {user.get_name()}\nHealth: {user.get_health()}\nWeapon: {user.get_weapon()}\nArmor: {user.get_armor()}")
+
 running = True
 
 while (running):
