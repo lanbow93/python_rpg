@@ -11,7 +11,11 @@ creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice ro
 #20 random monster names to choose from
 monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Vexalor", "Gloomfang", "Zaroth", "Vorgrath", "Lunaris", "Azgul", "Rendragor", "Sylvaris", "Zoltan", "Necronyx", "Frostbite", "Dreadmaw", "Venomshade", "Shadowclaw", "Ragnarok"]
 
+def fight(user):
+    print("Fight reached")
 
+def shop(user):
+    print("Shop reached")
 def gameplay(user):
     os.system("clear")
     print(f"Currently your weapon is a {user.weapon} and your armour is {user.armor}\n")
@@ -22,12 +26,19 @@ def gameplay(user):
 3. Quit
     ''')
     user_selection = input("Enter Selection: ")
-    if (user_selection = 1)
-    print("Selection: " + user_selection)
+    if (user_selection == "1"):
+        fight(user)
+    elif (user_selection == "2"):
+        shop(user)
+    elif (user_selection == "3"):
+        exit()
+    else:
+        input("Selection you have chosen was invalid.\nPress enter to continue\n")
+        gameplay(user)
 
 def character_creation(name):
     os.system("clear")
-    print("Choose your starter class:\n\n1. Warrior, 2. Wizard, 3. Rouge")
+    print("Choose your starter class:\n\n1. Warrior 2. Wizard 3. Rouge")
     user_input = input("Enter Selection: ")
     if (user_input == "1"):
         user = Human(name, "warrior")

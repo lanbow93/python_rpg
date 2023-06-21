@@ -69,10 +69,3 @@ class Monster(Being):
     
     def get_gold_value(self):
         return self.gold_value
-        
-
-user = Human("Lance", "wizard")
-
-monster = Monster("Umbridge", "dragon")
-
-print(f"Monster Health: {monster.get_health()}\nMonster Gold Value: {monster.get_gold_value()}")
