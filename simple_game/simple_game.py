@@ -6,7 +6,7 @@ print(f"Name: {user.get_name()}\nHealth: {user.get_health()}\nWeapon: {user.get_
 
 running = True
 
-while (running):
+def start_game():
     print("Welcome to the Basic RPG Game\n\nChoose one of the options below\n1. Start Game\n2. End Game")
     user_input = input("Enter Selection: ")
     if (user_input == "1"):
@@ -17,3 +17,6 @@ while (running):
         running = False
     else:
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
+
+start_game()
+    
