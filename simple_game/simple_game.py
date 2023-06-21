@@ -1,4 +1,5 @@
 from game_classes import Human, Monster
+import os
 
 # Weapon name, attack value
 weapons = {"sword": 1, "mace": 3, "broadsword": 5, "wand": 1, "grimoire": 3, "staff": 5, "bow": 1, "dagger": 3, "poisoned dagger": 5, "ooze": 1, "claws": 5, "fire": 5}
@@ -12,14 +13,25 @@ monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Ve
 
 
 def gameplay(user):
-    print(f"Currently your weapon is a {user.weapon} and your armour is {user.armor}")
+    os.system("clear")
+    print(f"Currently your weapon is a {user.weapon} and your armour is {user.armor}\n")
+    print(
+'''~~Main Menu~~
+1. Go Fight
+2. Shop
+3. Quit
+    ''')
+    user_selection = input("Enter Selection: ")
+    if (user_selection = 1)
+    print("Selection: " + user_selection)
 
 def character_creation(name):
+    os.system("clear")
     print("Choose your starter class:\n\n1. Warrior, 2. Wizard, 3. Rouge")
     user_input = input("Enter Selection: ")
     if (user_input == "1"):
         user = Human(name, "warrior")
-        print(f"Welcome to the adventure, ${name}")
+        print(f"Welcome to the adventure, {name}")
         gameplay(user)
     elif (user_input == "2"):
         user = Human(name, "wizard")
@@ -38,6 +50,7 @@ def character_creation(name):
 def start_game():
     print("Welcome to the Basic RPG Game\n\nChoose one of the options below\n1. Start Game\n2. End Game")
     user_input = input("Enter Selection: ")
+    os.system("clear")
     if (user_input == "1"):
         user_name = input("Enter Character Name: ")
         character_creation(user_name)
