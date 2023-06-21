@@ -39,8 +39,6 @@ class Human(Being):
         super().__init__(name, being_class)
         self.experience = 0
         self.gold = 0
-        
-
     
     def get_experience(self):
         return self.experience
@@ -54,6 +52,27 @@ class Human(Being):
     def change_gold(self, value):
         self.gold += value
 
+class Monster(Being):
+    def __init__(self, name, being_class):
+        super().__init__( name, being_class)
+        if(self.being_class == "slime"):
+            self.xp_value = self.gold_value = 1
+        elif(self.being_class == "wolf"):
+            self.xp_value = self.gold_value = 2
+        elif(self.being_class == "dragon"):
+            self.xp_value = self.gold_value = 3
+        else :
+            self.xp_value = self.gold_value = -1
+        
+    def get_xp_value(self):
+        return self.xp_value
+    
+    def get_gold_value(self):
+        return self.gold_value
+        
 
 user = Human("Lance", "wizard")
 
+monster = Monster("Umbridge", "dragon")
+
+print(f"Monster Health: {monster.get_health()}\nMonster Gold Value: {monster.get_gold_value()}")
