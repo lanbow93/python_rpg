@@ -1,4 +1,5 @@
-creature = {"warrior": ("sword", "chainmail"), "wizard": ("wand", "robe"), "rouge": ("bow", "cloak"),"slime": ("ooze", "goo"), "wolf": ("fur", "claws"), "dragon": ("scales", "fire breath")
+# CreatureClass : Weapon, Armor, Health
+creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice robe", 10), "rouge": ("bow", "cloak", 15),"slime": ("ooze", "goo", 5 ), "wolf": ("fur", "claws", 15 ), "dragon": ("scales", "fire breath", 30 )
 }
 
 class Being():
@@ -7,19 +8,29 @@ class Being():
         self.being_class = being_class
         self.weapon = creature[being_class][0]
         self.armor = creature[being_class][1]
+        self.health = creature[being_class][2]
 
     def get_name(self):
         return self.name
+
+    def get_class(self):
+        return self.being_class
     
     def get_weapon(self):
         return self.weapon
     
+    def set_weapon(self, chosen_weapon):
+        self.weapon = chosen_weapon
+
     def get_armor(self):
         return self.armor
     
-    def get_class(self):
-        return self.being_class
+    def set_amror(self, chosen_armor):
+        self.armor = chosen_armor
 
-user = Being("Lance", "wizard")
-
-print(user.get_name(), user.get_weapon(), user.get_armor(), user.get_class())
+    def get_health(self):
+        return self.health
+    
+    def change_health(self, amount):
+        self.health += amount
+    
