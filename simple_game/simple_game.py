@@ -11,11 +11,26 @@ creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice ro
 #20 random monster names to choose from
 monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Vexalor", "Gloomfang", "Zaroth", "Vorgrath", "Lunaris", "Azgul", "Rendragor", "Sylvaris", "Zoltan", "Necronyx", "Frostbite", "Dreadmaw", "Venomshade", "Shadowclaw", "Ragnarok"]
 
+def generate_enemy(user):
+    pass
+
 def fight(user):
-    print("Fight reached")
+    generate_enemy(user)
 
 def shop(user):
-    print("Shop reached")
+    print("Shop\n1. Weapon\n2. Armor\n3. Exit")
+    user_selection = input("Enter Selection: ")
+    if (user_selection == "1"):
+        fight(user)
+    elif (user_selection == "2"):
+        shop(user)
+    elif (user_selection == "3"):
+        exit()
+    else:
+        input("Selection you have chosen was invalid.\nPress enter to continue\n")
+        gameplay(user)
+
+
 def gameplay(user):
     os.system("clear")
     print(f"Currently your weapon is a {user.weapon} and your armour is {user.armor}\n")
