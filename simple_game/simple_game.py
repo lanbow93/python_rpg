@@ -17,29 +17,34 @@ shop_armor = {"warrior": ("metal plating", "diamond armor"), "wizard": ("apprent
 
 def generate_enemy(user):
     monster_name = monster_proper_nouns[random.randint(0, len(monster_proper_nouns))]
-
     if(user.get_experience() < 10):
-        print(f"Slime monster returned named: {monster_name}")
         return Monster(monster_name, "slime")
     elif(user.get_experience() < 20 and user.get_experience() >= 10):
-        print("Wolf monster returned")
         return Monster(monster_name, "wolf")
     elif(user.get_experience() >= 20):
-        print(f"Dragon monster returned")
         return Monster(monster_name, "dragon")
 
 def fight(user):
     encounter = generate_enemy(user)
+    print(f"You have encountered a {encounter.being_class} named {encounter.get_name}")
+    user_selection = input(f"What will you do?\n 1. Attack  2. Run Away")
 
+    if(user_selection == "1"):
+        pass
+    else:
+        gameplay(user)
 
 def shop(user):
-    print("Shop\n1. Weapon\n2. Armor\n3. Exit")
+    print("Shop\n1. Weapon\n2. Armor\n3. Potion\n4. Exit")
     user_selection = input("Enter Selection: ")
     if (user_selection == "1"):
-        fight(user)
+        for i in range(len(shop_weapons[user.being_class])):
+            print(f"{i+1}. {shop_weapons[user.being_class][i]}")
     elif (user_selection == "2"):
-        shop(user)
+        print("Armor:")
     elif (user_selection == "3"):
+        print("Potions:")
+    elif (user_selection == "4"):
         gameplay(user)
     else:
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
