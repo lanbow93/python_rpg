@@ -11,12 +11,16 @@ creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice ro
 #20 random monster names to choose from
 monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Vexalor", "Gloomfang", "Zaroth", "Vorgrath", "Lunaris", "Azgul", "Rendragor", "Sylvaris", "Zoltan", "Necronyx", "Frostbite", "Dreadmaw", "Venomshade", "Shadowclaw", "Ragnarok"]
 
-shop_weapons = 
+shop_weapons = {"warrior": ("mace", "broadsword"), "wizard": ("grimoire", "staff"), "rouge": ("dagger", "poisoned dagger")}
+shop_armor = {"warrior": ("metal plating", "diamond armor"), "wizard": ("apprentice robe", "master robe"), "rouge": ("veil of mystery", "reaper's robe")}
+
 def generate_enemy(user):
-    pass
+    if(user.get_experience() > 10):
+        return Monster()
 
 def fight(user):
-    generate_enemy(user)
+    encounter = generate_enemy(user)
+
 
 def shop(user):
     print("Shop\n1. Weapon\n2. Armor\n3. Exit")
@@ -89,5 +93,5 @@ def start_game():
 
 
 
-start_game()
+# start_game()
     
