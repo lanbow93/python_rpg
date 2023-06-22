@@ -1,4 +1,5 @@
 from game_classes import Human, Monster
+import random
 import os
 
 # Weapon name, attack value
@@ -15,8 +16,17 @@ shop_weapons = {"warrior": ("mace", "broadsword"), "wizard": ("grimoire", "staff
 shop_armor = {"warrior": ("metal plating", "diamond armor"), "wizard": ("apprentice robe", "master robe"), "rouge": ("veil of mystery", "reaper's robe")}
 
 def generate_enemy(user):
-    if(user.get_experience() > 10):
-        return Monster()
+    monster_name = monster_proper_nouns[random.randint(0, len(monster_proper_nouns))]
+
+    if(user.get_experience() < 10):
+        print(f"Slime monster returned named: {monster_name}")
+        return Monster(monster_name, "slime")
+    elif(user.get_experience() < 20 and user.get_experience() >= 10):
+        print("Wolf monster returned")
+        return Monster(monster_name, "wolf")
+    elif(user.get_experience() >= 20):
+        print(f"Dragon monster returned")
+        return Monster(monster_name, "dragon")
 
 def fight(user):
     encounter = generate_enemy(user)
@@ -93,5 +103,5 @@ def start_game():
 
 
 
-# start_game()
+start_game()
     
