@@ -12,8 +12,11 @@ creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice ro
 #20 random monster names to choose from
 monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Vexalor", "Gloomfang", "Zaroth", "Vorgrath", "Lunaris", "Azgul", "Rendragor", "Sylvaris", "Zoltan", "Necronyx", "Frostbite", "Dreadmaw", "Venomshade", "Shadowclaw", "Ragnarok"]
 
-shop_weapons = {"warrior": ("mace", "broadsword"), "wizard": ("grimoire", "staff"), "rouge": ("dagger", "poisoned dagger")}
-shop_armor = {"warrior": ("metal plating", "diamond armor"), "wizard": ("apprentice robe", "master robe"), "rouge": ("veil of mystery", "reaper's robe")}
+shop_weapons = {"warrior": ["mace", 10, "broadsword", 20], "wizard": ["grimoire", 10, "staff", 20], "rouge": ["dagger", 10, "poisoned dagger", 20]}
+shop_armor = {"warrior": ["metal plating", 10, "diamond armor", 20], "wizard": ["apprentice robe", 10, "master robe", 20], "rouge":["veil of mystery", 10, "reaper's robe", 20]}
+
+def attempt_weapon_purchase(item, user):
+    print("attempt purchase reached")
 
 def generate_enemy(user):
     monster_name = monster_proper_nouns[random.randint(0, len(monster_proper_nouns))]
@@ -35,11 +38,20 @@ def fight(user):
         gameplay(user)
 
 def shop(user):
+    os.system("clear")
     print("Shop\n1. Weapon\n2. Armor\n3. Potion\n4. Exit")
     user_selection = input("Enter Selection: ")
     if (user_selection == "1"):
-        for i in range(len(shop_weapons[user.being_class])):
-            print(f"{i+1}. {shop_weapons[user.being_class][i]}")
+        os.system("clear")
+        print("Weapon Options:\n")
+        list_count = 1
+        weapon_selection = []
+        for i in range(0,len(shop_weapons[user.being_class]),2):
+            print(f"{list_count}. {shop_weapons[user.being_class][i+1]} Gold - {shop_weapons[user.being_class][i].upper()}")
+            list_count += 1
+            weapon_selection.append(shop_weapons[user.being_class][i])
+        print(weapon_selection)
+        attempt_weapon_purchase(weapon_selection[int(input("\nEnter Selection: "))], user)
     elif (user_selection == "2"):
         print("Armor:")
     elif (user_selection == "3"):
@@ -47,6 +59,7 @@ def shop(user):
     elif (user_selection == "4"):
         gameplay(user)
     else:
+        os.system("clear")
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
         shop(user)
 
@@ -88,6 +101,7 @@ def character_creation(name):
         print(f"Welcome to the adventure, ${name}")
         gameplay(user)
     else:
+        os.system("clear")
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
         character_creation(name)
     
@@ -103,6 +117,7 @@ def start_game():
     elif (user_input == "2"):
         print("Thank you for playing")
     else:
+        os.system("clear")
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
         start_game()
 
