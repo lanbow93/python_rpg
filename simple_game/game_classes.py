@@ -9,6 +9,7 @@ class Being():
         self.weapon = creature[being_class][0]
         self.armor = creature[being_class][1]
         self.health = creature[being_class][2]
+        self.inventory = [self.weapon, self.armor]
 
     def get_name(self):
         return self.name
@@ -25,9 +26,19 @@ class Being():
     def get_armor(self):
         return self.armor
     
-    def set_amror(self, chosen_armor):
+    def set_armor(self, chosen_armor):
         self.armor = chosen_armor
 
+    def get_inventory(self):
+        return (self.inventory)
+    
+    def change_inventory(self, operation, item):
+        if(operation == "add"):
+            self.inventory.append(item)
+        else:
+            self.inventory.pop(self.inventory.index(item))
+
+            
     def get_health(self):
         return self.health
     
