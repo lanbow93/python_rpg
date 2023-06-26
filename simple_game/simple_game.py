@@ -15,13 +15,14 @@ monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Ve
 shop_weapons = {"warrior": ["mace", 10, "broadsword", 20], "wizard": ["grimoire", 10, "staff", 20], "rouge": ["dagger", 10, "poisoned dagger", 20]}
 shop_armor = {"warrior": ["metal plating", 10, "diamond armor", 20], "wizard": ["apprentice robe", 10, "master robe", 20], "rouge":["veil of mystery", 10, "reaper's robe", 20]}
 
-def attempt_weapon_purchase(selection_index, user):
-    print(selection_index)
-    # weapon = shop_weapons[user.being_class][selection_index]
-    # price = shop_weapons[user.being_class][selection_index + 1]
-    # shop_weapons[user.being_class].pop(selection_index + 1)
-    # shop_weapons[user.being_class].pop(selection_index)
-    # print(shop_weapons)
+def attempt_weapon_purchase(selection, user):
+    user_class = user.being_class
+    selection_index = shop_weapons[user_class].index(selection)
+    weapon = shop_weapons[user.being_class][selection_index]
+    price = shop_weapons[user.being_class][selection_index + 1]
+    shop_weapons[user.being_class].pop(selection_index + 1)
+    shop_weapons[user.being_class].pop(selection_index)
+    print(shop_weapons)
 def generate_enemy(user):
     monster_name = monster_proper_nouns[random.randint(0, len(monster_proper_nouns))]
     if(user.get_experience() < 10):
