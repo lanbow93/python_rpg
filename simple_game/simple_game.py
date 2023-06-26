@@ -90,9 +90,25 @@ def fight(user):
     else:
         gameplay(user)
 
-def view_inventory():
-    pass
+def inventory_selection(user, item):
+    print(f"Selected item: {item}")
 
+def view_inventory(user):
+    inventory = user.get_inventory()
+    list_count = 1
+    print("Q. Quit")
+    for item in inventory:
+        print(f"{list_count}. {item.upper()}")
+        list_count += 1
+    user_selection = input("Enter Selection: ")
+    if(user_selection == "Q" or user_selection == "q"):
+        gameplay(user)
+    if(user_selection.isdigit() and int(user_selection) <= len(inventory)):
+        inventory_selection(user, inventory[int(user_selection) - 1])
+    else:
+        input("Selection you have chosen was invalid.\nPress enter to continue\n")
+        view_inventory(user)
+        
 def shop(user):
     os.system("clear")
     print("Shop\n1. Weapon\n2. Armor\n3. Potion\n4. Exit")
@@ -142,7 +158,7 @@ def shop(user):
 
 def gameplay(user):
     os.system("clear")
-    print(f"Weapon: {user.get_weapon().upper()} | Armor: {user.get_armor().upper()} | Money: {user.get_gold()}\n")
+    print(f"Weapon: {user.get_weapon().upper()} | Armor: {user.get_armor().upper()} | Money: {user.get_gold()} | Health: {user.get_health()}\n")
     print(
 '''~~Main Menu~~
 1. Go Fight
@@ -156,7 +172,7 @@ def gameplay(user):
     elif (user_selection == "2"):
         shop(user)
     elif (user_selection == "3"):
-        view_inventory()
+        view_inventory(user)
     elif (user_selection == "4"):
         exit()
     else:
