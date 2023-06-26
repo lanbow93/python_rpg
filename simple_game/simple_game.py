@@ -15,14 +15,30 @@ monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Ve
 shop_weapons = {"warrior": ["mace", 10, "broadsword", 20], "wizard": ["grimoire", 10, "staff", 20], "rouge": ["dagger", 10, "poisoned dagger", 20]}
 shop_armor = {"warrior": ["metal plating", 10, "diamond armor", 20], "wizard": ["apprentice robe", 10, "master robe", 20], "rouge":["veil of mystery", 10, "reaper's robe", 20]}
 
-def attempt_weapon_purchase(selection, user):
+def attempt_item_purchase(selection, user, item_type):
     user_class = user.being_class
-    selection_index = shop_weapons[user_class].index(selection)
-    weapon = shop_weapons[user.being_class][selection_index]
-    price = shop_weapons[user.being_class][selection_index + 1]
-    shop_weapons[user.being_class].pop(selection_index + 1)
-    shop_weapons[user.being_class].pop(selection_index)
-    print(shop_weapons)
+    if(item_type == "weapon"):
+        selection_index = shop_weapons[user_class].index(selection)
+        weapon = shop_weapons[user.being_class][selection_index]
+        price = shop_weapons[user.being_class][selection_index + 1]
+
+        if (price > user.get_gold()):
+            os.system("clear")
+            input("You do not have enough gold for this purchase.\nPress enter to continue\n")
+            shop(user)
+        else:
+            os.system("clear")
+            user.change_gold((-1 * price))
+            user.set_weapon(weapon)
+
+            input(f"You have purchased the {weapon}.\nRemaining Balance: {user.get_gold()}\nPress enter to continue\n")
+            # Removing the weapons from shop availability
+            
+            shop_weapons[user.being_class].pop(selection_index + 1)
+            shop_weapons[user.being_class].pop(selection_index)
+            gameplay(user)
+
+
 def generate_enemy(user):
     monster_name = monster_proper_nouns[random.randint(0, len(monster_proper_nouns))]
     if(user.get_experience() < 10):
@@ -57,9 +73,19 @@ def shop(user):
             list_count += 1
             weapon_selection.append(shop_weapons[user.being_class][i])
         print(weapon_selection)
-        attempt_weapon_purchase(weapon_selection[int(input("\nEnter Selection: "))-1], user)
+        attempt_item_purchase(weapon_selection[int(input("\nEnter Selection: "))-1], user, "weapon")
     elif (user_selection == "2"):
-        print("Armor:")
+        os.system("clear")
+        print("Armor Options:\n")
+        list_count = 1
+        armor_selection = []
+        for i in range(0,len(shop_armor[user.being_class]),2):
+            print(f"{list_count}. {shop_armor[user.being_class][i+1]} Gold - {shop_armor[user.being_class][i].upper()}")
+            list_count += 1
+            armor_selection.append(shop_armor[user.being_class][i])
+        print(armor_selection)
+        attempt_item_purchase(armor_selection[int(input("\nEnter Selection: "))-1], user, armor)
+        
     elif (user_selection == "3"):
         print("Potions:")
     elif (user_selection == "4"):

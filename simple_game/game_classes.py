@@ -38,7 +38,7 @@ class Human(Being):
     def __init__(self, name, being_class):
         super().__init__(name, being_class)
         self.experience = 0
-        self.gold = 0
+        self.gold = 15
     
     def get_experience(self):
         return self.experience
