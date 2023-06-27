@@ -107,22 +107,27 @@ def inventory_selection(user, item):
         restore_amount = potions[item]
         if(user_health == base_health):
             print("Health is at full. Stop being greedy")
+            input("Press enter to continue\n")
             view_inventory(user)
+            
         elif(user_health + restore_amount  > base_health):
+            user.change_inventory("remove", item)
             user.change_health(base_health-user_health)
-            print(user.get_health())
             print("Health has been restored to full")
+            input("Press enter to continue\n")
             view_inventory(user)
         else:
+            user.change_inventory("remove", item)
             user.change_health(restore_amount)
-            print(user.get_health())
             print(f"Health has been restored to {user.get_health()}")
+            input("Press enter to continue\n")
             view_inventory(user)
 
     else:
         print("You didn't select a listed item")
     
 def view_inventory(user):
+    os.system("clear")
     inventory = user.get_inventory()
     list_count = 1
     print("Q. Quit")
@@ -187,7 +192,7 @@ def shop(user):
 
 def gameplay(user):
     os.system("clear")
-    print(f"Weapon: {user.get_weapon().upper()} | Armor: {user.get_armor().upper()} | Money: {user.get_gold()} | Health: {user.get_health()}\n")
+    print(f"Weapon: {user.get_weapon().upper()} | Armor: {user.get_armor().upper()} | Money: {user.get_gold()} | Health: {user.get_health()}/{creature[user.being_class][2]} \n")
     print(
 '''~~Main Menu~~
 1. Go Fight
