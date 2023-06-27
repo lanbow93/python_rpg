@@ -2,15 +2,18 @@ from game_classes import Human, Monster
 import random
 import os
 
-# Weapon name, attack value
-weapons = {"sword": 1, "mace": 3, "broadsword": 5, "wand": 1, "grimoire": 3, "staff": 5, "bow": 1, "dagger": 3, "poisoned dagger": 5, "ooze": 1, "claws": 5, "fire": 5}
-#armor name, defense value
-armor_defense = {"chainmail": 1, "metal plating": 2, "diamond armor": 3, "novice robe": 1, "apprentice robe": 2, "master robe": 3, "cloak": 1, "veil of mystery": 2, "reaper's robe": 3, "goo": 1, "fur": 2, "scales": 3 }
+#20 random monster names to choose from
+monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Vexalor", "Gloomfang", "Zaroth", "Vorgrath", "Lunaris", "Azgul", "Rendragor", "Sylvaris", "Zoltan", "Necronyx", "Frostbite", "Dreadmaw", "Venomshade", "Shadowclaw", "Ragnarok"]
+
 # Inital starting stats and equipment Class: (Weapon, Armor, Health)
 creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice robe", 10), "rouge": ("bow", "cloak", 15),"slime": ("ooze", "goo", 5 ), "wolf": ("fur", "claws", 15 ), "dragon": ("scales", "fire breath", 30 )
 }
-#20 random monster names to choose from
-monster_proper_nouns = ["Drakonis", "Morbos", "Zephyrion", "Nyxar", "Xalos", "Vexalor", "Gloomfang", "Zaroth", "Vorgrath", "Lunaris", "Azgul", "Rendragor", "Sylvaris", "Zoltan", "Necronyx", "Frostbite", "Dreadmaw", "Venomshade", "Shadowclaw", "Ragnarok"]
+
+# Weapon name, attack value
+weapons = {"sword": 1, "mace": 3, "broadsword": 5, "wand": 1, "grimoire": 3, "staff": 5, "bow": 1, "dagger": 3, "poisoned dagger": 5, "ooze": 1, "claws": 5, "fire": 5}
+#armor name, defense value
+armors = {"chainmail": 1, "metal plating": 2, "diamond armor": 3, "novice robe": 1, "apprentice robe": 2, "master robe": 3, "cloak": 1, "veil of mystery": 2, "reaper's robe": 3, "goo": 1, "fur": 2, "scales": 3 }
+potions = {"lesser health potion": 10, "greater health potion": 20}
 
 shop_weapons = {"warrior": ["mace", 10, "broadsword", 20], "wizard": ["grimoire", 10, "staff", 20], "rouge": ["dagger", 10, "poisoned dagger", 20]}
 shop_armors = {"warrior": ["metal plating", 10, "diamond armor", 20], "wizard": ["apprentice robe", 10, "master robe", 20], "rouge":["veil of mystery", 10, "reaper's robe", 20]}
@@ -91,8 +94,34 @@ def fight(user):
         gameplay(user)
 
 def inventory_selection(user, item):
-    print(f"Selected item: {item}")
+    # If item is a weapon
+    if item in weapons.keys():
+        print(f"Weapon Selected: {item}")
+    # If item is armor
+    if item in armors.keys():
+        print(f"Armor Selected: {item}")
+    # If item is a potion
+    if item in potions.keys():
+        user_health = user.get_health()
+        base_health = creature[user.being_class][2]
+        restore_amount = potions[item]
+        if(user_health == base_health):
+            print("Health is at full. Stop being greedy")
+            view_inventory(user)
+        elif(user_health + restore_amount  > base_health):
+            user.change_health(base_health-user_health)
+            print(user.get_health())
+            print("Health has been restored to full")
+            view_inventory(user)
+        else:
+            user.change_health(restore_amount)
+            print(user.get_health())
+            print(f"Health has been restored to {user.get_health()}")
+            view_inventory(user)
 
+    else:
+        print("You didn't select a listed item")
+    
 def view_inventory(user):
     inventory = user.get_inventory()
     list_count = 1
