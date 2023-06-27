@@ -10,7 +10,8 @@ creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice ro
 }
 
 # Weapon name, attack value
-weapons = {"sword": 1, "mace": 3, "broadsword": 5, "wand": 1, "grimoire": 3, "staff": 5, "bow": 1, "dagger": 3, "poisoned dagger": 5, "ooze": 1, "claws": 5, "fire": 5}
+weapons = {"sword": 2, "mace": 3, "broadsword": 5, "wand": 2, "grimoire": 3, "staff": 5, "bow": 2, "dagger": 3, "poisoned dagger": 5, "ooze": 2, "claws": 3, "fire": 4}
+
 #armor name, defense value
 armors = {"chainmail": 1, "metal plating": 2, "diamond armor": 3, "novice robe": 1, "apprentice robe": 2, "master robe": 3, "cloak": 1, "veil of mystery": 2, "reaper's robe": 3, "goo": 1, "fur": 2, "scales": 3 }
 potions = {"lesser health potion": 10, "greater health potion": 20}
@@ -84,16 +85,31 @@ def generate_enemy(user):
         return Monster(monster_name, "dragon")
 
 def fight(user):
-    encounter = generate_enemy(user)
-    print(f"You have encountered a {encounter.being_class} named {encounter.get_name}")
-    user_selection = input(f"What will you do?\n 1. Attack  2. Run Away")
+    enemy = generate_enemy(user)
+    os.system("clear")
+    print(f"You have encountered a {enemy.being_class} named {enemy.get_name()}")
+    while(enemy.get_health() > 0 and user.get_health() > 0):
+        os.system("clear")
+        print(f"{enemy.get_name()} <~-~> Health: {enemy.get_health()}/{creature[enemy.being_class][2]}\n")
+        user_selection = input(f"What will you do?\n 1. Attack  2. View Inventory 3. Run Away\n")
+        if(user_selection == "1"):
+            # Calcuate damage after defense
+            damage = weapons[user.get_weapon()] - armors[enemy.get_armor()]
+            enemy.change_health(-damage)
+            print(f"{user.get_name()} has done {damage} damage to {enemy.get_name()}")
+            input("Press enter to continue\n")
 
-    if(user_selection == "1"):
-        pass
-    else:
-        gameplay(user)
+            if (enemy.get_health() > 0):
+                enemy_damage = weapons[enemy.get_weapon()] - armors[user.get_armor()]
+                user.change_health(-damage)
+                print(f"{enemy.get_name()} has done {enemy_damage} damage to {user.get_name()}")
+                input("Press enter to continue\n")
+        elif(user_selection == "2"):
+            pass
+        else:
+            gameplay(user)
 
-def inventory_selection(user, item):
+def inventory_selection(user, item, callback):
     os.system("clear")
     # If item is a weapon
     if item in weapons.keys():
@@ -101,24 +117,24 @@ def inventory_selection(user, item):
         if (current_weapon == item):
             print("You already have this equipped")
             input("Press enter to continue\n")
-            view_inventory(user)
+            view_inventory(user, callback)
         else:
             print(f"Equipping {item}")
             user.set_weapon(item)
             input("Press enter to continue\n")
-            view_inventory(user)
+            view_inventory(user, callback)
     # If item is armor
     elif item in armors.keys():
         current_armor = user.get_armor()
         if (current_armor == item):
             print("You already have this equipped")
             input("Press enter to continue\n")
-            view_inventory(user)
+            view_inventory(user, callback)
         else:
             print(f"Equipping {item}")
             user.set_armor(item)
             input("Press enter to continue\n")
-            view_inventory(user)
+            view_inventory(user, callback)
 
     # If item is a potion
     elif item in potions.keys():
@@ -134,18 +150,18 @@ def inventory_selection(user, item):
             user.change_health(base_health-user_health)
             print("Health has been restored to full")
             input("Press enter to continue\n")
-            view_inventory(user)
+            view_inventory(user, callback)
         else:
             user.change_inventory("remove", item)
             user.change_health(restore_amount)
             print(f"Health has been restored to {user.get_health()}")
             input("Press enter to continue\n")
-            view_inventory(user)
+            view_inventory(user, callback)
 
     else:
         print("You didn't select a listed item")
     
-def view_inventory(user):
+def view_inventory(user, callback):
     os.system("clear")
     inventory = user.get_inventory()
     list_count = 1
@@ -155,12 +171,12 @@ def view_inventory(user):
         list_count += 1
     user_selection = input("Enter Selection: ")
     if(user_selection == "Q" or user_selection == "q"):
-        gameplay(user)
+        callback(user)
     if(user_selection.isdigit() and int(user_selection) <= len(inventory)):
-        inventory_selection(user, inventory[int(user_selection) - 1])
+        inventory_selection(user, inventory[int(user_selection) - 1], callback)
     else:
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
-        view_inventory(user)
+        view_inventory(user, callback)
         
 def shop(user):
     os.system("clear")
@@ -225,7 +241,7 @@ def gameplay(user):
     elif (user_selection == "2"):
         shop(user)
     elif (user_selection == "3"):
-        view_inventory(user)
+        view_inventory(user, gameplay)
     elif (user_selection == "4"):
         exit()
     else:
