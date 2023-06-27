@@ -94,14 +94,34 @@ def fight(user):
         gameplay(user)
 
 def inventory_selection(user, item):
+    os.system("clear")
     # If item is a weapon
     if item in weapons.keys():
-        print(f"Weapon Selected: {item}")
+        current_weapon = user.get_weapon()
+        if (current_weapon == item):
+            print("You already have this equipped")
+            input("Press enter to continue\n")
+            view_inventory(user)
+        else:
+            print(f"Equipping {item}")
+            user.set_weapon(item)
+            input("Press enter to continue\n")
+            view_inventory(user)
     # If item is armor
-    if item in armors.keys():
-        print(f"Armor Selected: {item}")
+    elif item in armors.keys():
+        current_armor = user.get_armor()
+        if (current_armor == item):
+            print("You already have this equipped")
+            input("Press enter to continue\n")
+            view_inventory(user)
+        else:
+            print(f"Equipping {item}")
+            user.set_armor(item)
+            input("Press enter to continue\n")
+            view_inventory(user)
+
     # If item is a potion
-    if item in potions.keys():
+    elif item in potions.keys():
         user_health = user.get_health()
         base_health = creature[user.being_class][2]
         restore_amount = potions[item]
@@ -109,7 +129,6 @@ def inventory_selection(user, item):
             print("Health is at full. Stop being greedy")
             input("Press enter to continue\n")
             view_inventory(user)
-            
         elif(user_health + restore_amount  > base_health):
             user.change_inventory("remove", item)
             user.change_health(base_health-user_health)
