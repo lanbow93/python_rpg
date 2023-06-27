@@ -84,13 +84,20 @@ def generate_enemy(user):
     elif(user.get_experience() >= 20):
         return Monster(monster_name, "dragon")
 
-def fight(user):
-    enemy = generate_enemy(user)
+def fight(user, enemy=""):
     os.system("clear")
-    print(f"You have encountered a {enemy.being_class} named {enemy.get_name()}")
+    #If an enemy has been passed, set them to current enemy
+    if enemy:
+        enemy = enemy
+        print(f"You have encountered a {enemy.being_class} named {enemy.get_name()}")
+    else:
+        enemy = generate_enemy(user)
+        print(f"Fighting a {enemy.being_class} named {enemy.get_name()}")
+    
     while(enemy.get_health() > 0 and user.get_health() > 0):
         os.system("clear")
-        print(f"{enemy.get_name()} <~-~> Health: {enemy.get_health()}/{creature[enemy.being_class][2]}\n")
+        print(f"{enemy.get_name()} <~-~> Health: {enemy.get_health()}/{creature[enemy.being_class][2]}")
+        print(f"{user.get_name()} <~-~> Health: {user.get_health()}/{creature[user.being_class][2]}\n")
         user_selection = input(f"What will you do?\n 1. Attack  2. View Inventory 3. Run Away\n")
         if(user_selection == "1"):
             # Calcuate damage after defense
@@ -98,18 +105,17 @@ def fight(user):
             enemy.change_health(-damage)
             print(f"{user.get_name()} has done {damage} damage to {enemy.get_name()}")
             input("Press enter to continue\n")
-
             if (enemy.get_health() > 0):
                 enemy_damage = weapons[enemy.get_weapon()] - armors[user.get_armor()]
                 user.change_health(-damage)
                 print(f"{enemy.get_name()} has done {enemy_damage} damage to {user.get_name()}")
                 input("Press enter to continue\n")
         elif(user_selection == "2"):
-            pass
+            view_inventory(user, fight, enemy)
         else:
             gameplay(user)
 
-def inventory_selection(user, item, callback):
+def inventory_selection(user, item, callback, enemy=""):
     os.system("clear")
     # If item is a weapon
     if item in weapons.keys():
@@ -117,24 +123,36 @@ def inventory_selection(user, item, callback):
         if (current_weapon == item):
             print("You already have this equipped")
             input("Press enter to continue\n")
-            view_inventory(user, callback)
+            if (enemy):
+                view_inventory(user, callback, enemy)
+            else:
+                view_inventory(user, callback)
         else:
             print(f"Equipping {item}")
             user.set_weapon(item)
             input("Press enter to continue\n")
-            view_inventory(user, callback)
+            if (enemy):
+                view_inventory(user, callback, enemy)
+            else:
+                view_inventory(user, callback)
     # If item is armor
     elif item in armors.keys():
         current_armor = user.get_armor()
         if (current_armor == item):
             print("You already have this equipped")
             input("Press enter to continue\n")
-            view_inventory(user, callback)
+            if (enemy):
+                view_inventory(user, callback, enemy)
+            else:
+                view_inventory(user, callback)
         else:
             print(f"Equipping {item}")
             user.set_armor(item)
             input("Press enter to continue\n")
-            view_inventory(user, callback)
+            if (enemy):
+                view_inventory(user, callback, enemy)
+            else:
+                view_inventory(user, callback)
 
     # If item is a potion
     elif item in potions.keys():
@@ -144,24 +162,36 @@ def inventory_selection(user, item, callback):
         if(user_health == base_health):
             print("Health is at full. Stop being greedy")
             input("Press enter to continue\n")
-            view_inventory(user)
+            if (enemy):
+                view_inventory(user, callback, enemy)
+            else:
+                view_inventory(user, callback)
+
         elif(user_health + restore_amount  > base_health):
             user.change_inventory("remove", item)
             user.change_health(base_health-user_health)
             print("Health has been restored to full")
             input("Press enter to continue\n")
-            view_inventory(user, callback)
+            if (enemy):
+                view_inventory(user, callback, enemy)
+            else:
+                view_inventory(user, callback)
+
         else:
             user.change_inventory("remove", item)
             user.change_health(restore_amount)
             print(f"Health has been restored to {user.get_health()}")
             input("Press enter to continue\n")
-            view_inventory(user, callback)
+            if (enemy):
+                view_inventory(user, callback, enemy)
+            else:
+                view_inventory(user, callback)
+
 
     else:
         print("You didn't select a listed item")
     
-def view_inventory(user, callback):
+def view_inventory(user, callback, enemy=""):
     os.system("clear")
     inventory = user.get_inventory()
     list_count = 1
@@ -171,12 +201,21 @@ def view_inventory(user, callback):
         list_count += 1
     user_selection = input("Enter Selection: ")
     if(user_selection == "Q" or user_selection == "q"):
-        callback(user)
+        if enemy:
+            callback(user, enemy)
+        else:
+            callback(user)
     if(user_selection.isdigit() and int(user_selection) <= len(inventory)):
-        inventory_selection(user, inventory[int(user_selection) - 1], callback)
+        if enemy:
+            inventory_selection(user, inventory[int(user_selection) - 1], callback, enemy)
+        else: 
+            inventory_selection(user, inventory[int(user_selection) - 1], callback)
     else:
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
-        view_inventory(user, callback)
+        if (enemy):
+            view_inventory(user, callback, enemy)
+        else:
+            view_inventory(user, callback)
         
 def shop(user):
     os.system("clear")
