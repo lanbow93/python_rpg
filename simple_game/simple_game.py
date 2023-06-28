@@ -211,8 +211,6 @@ def inventory_selection(user, item, callback, enemy=""):
                 view_inventory(user, callback, enemy)
             else:
                 view_inventory(user, callback)
-
-
     else:
         print("You didn't select a listed item")
     
@@ -333,8 +331,6 @@ def character_creation(name):
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
         character_creation(name)
     
-
-
 def start_game():
     print("Welcome to the Basic RPG Game\n\nChoose one of the options below\n1. Start Game\n2. End Game")
     user_input = input("Enter Selection: ")
@@ -348,8 +344,6 @@ def start_game():
         os.system("clear")
         input("Selection you have chosen was invalid.\nPress enter to continue\n")
         start_game()
-
-
 
 start_game()
     

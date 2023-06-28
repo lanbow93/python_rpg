@@ -1,7 +1,6 @@
 # CreatureClass : Weapon, Armor, Health
-creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice robe", 10), "rouge": ("bow", "cloak", 15),"slime": ("ooze", "goo", 5 ), "wolf": ("claws", "fur", 15 ), "dragon": ( "fire breath","scales", 30 )
+creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice robe", 20), "rouge": ("bow", "cloak", 20),"slime": ("ooze", "goo", 5 ), "wolf": ("claws", "fur", 15 ), "dragon": ( "fire breath","scales", 30 )
 }
-
 class Being():
     def __init__(self, name, being_class):
         self.name = name
@@ -37,7 +36,6 @@ class Being():
             self.inventory.append(item)
         elif (operation == "remove"):
             self.inventory.pop(self.inventory.index(item))
-
             
     def get_health(self):
         return self.health
