@@ -1,5 +1,5 @@
 # CreatureClass : Weapon, Armor, Health
-creature = {"warrior": ("sword", "chainmail", 5), "wizard": ("wand", "novice robe", 10), "rouge": ("bow", "cloak", 15),"slime": ("ooze", "goo", 5 ), "wolf": ("fur", "claws", 15 ), "dragon": ("scales", "fire breath", 30 )
+creature = {"warrior": ("sword", "chainmail", 20), "wizard": ("wand", "novice robe", 10), "rouge": ("bow", "cloak", 15),"slime": ("ooze", "goo", 5 ), "wolf": ("claws", "fur", 15 ), "dragon": ( "fire breath","scales", 30 )
 }
 
 class Being():
@@ -67,11 +67,11 @@ class Monster(Being):
     def __init__(self, name, being_class):
         super().__init__( name, being_class)
         if(self.being_class == "slime"):
-            self.xp_value = self.gold_value = 1
+            self.xp_value = self.gold_value = 4
         elif(self.being_class == "wolf"):
-            self.xp_value = self.gold_value = 2
+            self.xp_value = self.gold_value = 6
         elif(self.being_class == "dragon"):
-            self.xp_value = self.gold_value = 3
+            self.xp_value = self.gold_value = 8
         else :
             self.xp_value = self.gold_value = -1
         

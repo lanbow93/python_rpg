@@ -14,7 +14,7 @@ weapons = {"sword": 2, "mace": 3, "broadsword": 5, "wand": 2, "grimoire": 3, "st
 
 #armor name, defense value
 armors = {"chainmail": 1, "metal plating": 2, "diamond armor": 3, "novice robe": 1, "apprentice robe": 2, "master robe": 3, "cloak": 1, "veil of mystery": 2, "reaper's robe": 3, "goo": 1, "fur": 2, "scales": 3 }
-potions = {"lesser health potion": 10, "greater health potion": 20}
+potions = {"lesser health potion": 5, "greater health potion": 10}
 
 shop_weapons = {"warrior": ["mace", 10, "broadsword", 20], "wizard": ["grimoire", 10, "staff", 20], "rouge": ["dagger", 10, "poisoned dagger", 20]}
 shop_armors = {"warrior": ["metal plating", 10, "diamond armor", 20], "wizard": ["apprentice robe", 10, "master robe", 20], "rouge":["veil of mystery", 10, "reaper's robe", 20]}
@@ -84,7 +84,7 @@ def attempt_item_purchase(selection, user, item_type):
             gameplay(user)
 
 def generate_enemy(user):
-    monster_name = monster_proper_nouns[random.randint(0, len(monster_proper_nouns))]
+    monster_name = monster_proper_nouns[random.randint(0, len(monster_proper_nouns)-1)]
     if(user.get_experience() < 10):
         return Monster(monster_name, "slime")
     elif(user.get_experience() < 20 and user.get_experience() >= 10):
