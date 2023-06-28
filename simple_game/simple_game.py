@@ -20,6 +20,14 @@ shop_weapons = {"warrior": ["mace", 10, "broadsword", 20], "wizard": ["grimoire"
 shop_armors = {"warrior": ["metal plating", 10, "diamond armor", 20], "wizard": ["apprentice robe", 10, "master robe", 20], "rouge":["veil of mystery", 10, "reaper's robe", 20]}
 shop_potions = {"warrior": ["lesser health potion", 10, "greater health potion", 20], "wizard": ["lesser health potion", 10, "greater health potion", 20], "rouge":["lesser health potion", 10, "greater health potion", 20]}
 
+def gameover(status):
+    if(status == "lose"):
+        print("GAME OVER. You lose! Good Day Sir!")
+    elif(status == "win"):
+        print("Congratulations on beating the dragon. You have won the game.")
+    else:
+        print("You did pass the correct argument for gameover()")
+
 def attempt_item_purchase(selection, user, item_type):
     user_class = user.being_class
     if(item_type == "weapon"):
@@ -112,8 +120,25 @@ def fight(user, enemy=""):
                 input("Press enter to continue\n")
         elif(user_selection == "2"):
             view_inventory(user, fight, enemy)
-        else:
+        elif(user_selection == "3"):
             gameplay(user)
+        else:
+            input("Selection you have chosen was invalid.\nPress enter to continue\n")
+            fight(user, enemy)            
+    
+    if(user.get_health()<= 0):
+        gameover("lose")
+    elif(enemy.get_health() <= 0 and enemy.being_class == "dragon"):
+        gameover("win")
+    else:
+        os.system("clear")
+        earned_gold = enemy.get_gold_value()
+        experience = enemy.get_xp_value()
+        user.change_gold(earned_gold)
+        user.change_experience(experience)
+        print(f"You have defeated {enemy.get_name()}.\nYou have earned {earned_gold} gold and {experience} experience points")
+        input("Press enter to continue\n")
+        gameplay(user)
 
 def inventory_selection(user, item, callback, enemy=""):
     os.system("clear")

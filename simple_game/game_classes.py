@@ -37,7 +37,7 @@ class Being():
             self.inventory.append(item)
         elif (operation == "remove"):
             self.inventory.pop(self.inventory.index(item))
-        
+
             
     def get_health(self):
         return self.health
