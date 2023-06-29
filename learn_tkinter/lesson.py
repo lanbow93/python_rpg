@@ -48,7 +48,7 @@ btn6.grid(row=1, column=2, sticky=tk.W+tk.E)
 #Stretch into the X dimension 
 button_frame.pack(fill="x")
 
-another_btn = tk.Button(root, "test")
+another_btn = tk.Button(root, text="test")
 another_btn.place(x=200, y=200, height=100, width=100)
 
 # Calling constructor
