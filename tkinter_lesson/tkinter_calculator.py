@@ -22,13 +22,48 @@ def button_empty():
 def button_addition():          
     first_number = e.get()
     global f_num
+    global operation
+    operation = "addition"
+    f_num = first_number
+    e.delete(0, tk.END)
+
+def button_subtraction():
+    first_number = e.get()
+    global f_num
+    global operation
+    operation = "subtraction"
+    f_num = first_number
+    e.delete(0, tk.END)
+
+def button_multiplication():
+    first_number = e.get()
+    global f_num
+    global operation
+    operation = "multiplication"
+    f_num = first_number
+    e.delete(0, tk.END)
+
+def button_division():
+    first_number = e.get()
+    global f_num
+    global operation
+    operation = "division"
     f_num = first_number
     e.delete(0, tk.END)
 
 def button_equal():
     second_number = e.get()
     e.delete(0, tk.END)
-    e.insert(0, int(f_num) + int(second_number))
+    if(operation == "addition"):
+        e.insert(0, int(f_num) + int(second_number))
+    elif(operation == "multiplication"):
+        e.insert(0, int(f_num) * int(second_number))
+    elif(operation == "subtraction"):
+        e.insert(0, int(f_num) - int(second_number))
+    elif(operation == "division"):
+        e.insert(0, int(f_num) / int(second_number))
+    else:
+        e.insert(0, "UNDEFINED")
 #Define buttons
 button_1 = tk.Button(root, text="1", padx=40, pady=20, command=lambda: button_click(1))
 button_2 = tk.Button(root, text="2", padx=40, pady=20, command=lambda: button_click(2))
@@ -44,6 +79,9 @@ button_add = tk.Button(root, text="+", padx=39, pady=20, command=button_addition
 button_clear = tk.Button(root, text="Clear", padx=79, pady=20, command= button_empty)
 button_equals = tk.Button(root, text="=", padx=91, pady=20, command=button_equal)
 
+button_subtract = tk.Button(root, text="-", padx=42, pady=20, command=button_subtraction)
+button_multiply = tk.Button(root, text="*", padx=41, pady=20, command=button_multiplication)
+button_divide = tk.Button(root, text="/", padx=42, pady=20, command=button_division)
 #Put buttons on screen
 button_1.grid(row=3, column=0)
 button_2.grid(row=3, column=1)
@@ -60,6 +98,9 @@ button_clear.grid(row=4, column=1, columnspan=2)
 button_add.grid(row=5, column=0)
 button_equals.grid(row=5, column=1, columnspan=2)
 
+button_subtract.grid(row=6, column=0)
+button_multiply.grid(row=6, column=1)
+button_divide.grid(row=6, column=2)
 
 #Launching the program loop
 root.mainloop()
