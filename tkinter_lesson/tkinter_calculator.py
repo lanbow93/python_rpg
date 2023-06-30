@@ -11,9 +11,25 @@ e.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
 e.insert(0, "")
 
 def button_click(number):
-    # e.delete(0, tk.END)
-    e.insert(0, number)
+    
+    current = e.get()
+    e.delete(0, tk.END)
+    e.insert(0, str(current) + str(number))
 
+def button_empty():
+    e.delete(0, tk.END)
+
+def button_addition():          
+    first_number = e.get()
+    global f_num
+    f_num = first_number
+    e.delete(0, tk.END)
+
+def button_equal():
+    second_number = e.get()
+    e.delete(0, tk.END)
+    e.insert(0, int(f_num) + int(second_number))
+#Define buttons
 button_1 = tk.Button(root, text="1", padx=40, pady=20, command=lambda: button_click(1))
 button_2 = tk.Button(root, text="2", padx=40, pady=20, command=lambda: button_click(2))
 button_3 = tk.Button(root, text="3", padx=40, pady=20, command=lambda: button_click(3))
@@ -24,21 +40,20 @@ button_7 = tk.Button(root, text="7", padx=40, pady=20, command=lambda: button_cl
 button_8 = tk.Button(root, text="8", padx=40, pady=20, command=lambda: button_click(8))
 button_9 = tk.Button(root, text="9", padx=40, pady=20, command=lambda: button_click(9))
 button_0 = tk.Button(root, text="0", padx=40, pady=20, command=lambda: button_click(0))
-button_add = tk.Button(root, text="+", padx=39, pady=20, command=lambda: button_click())
-button_clear = tk.Button(root, text="Clear", padx=79, pady=20, command=lambda: button_click())
-button_equals = tk.Button(root, text="=", padx=91, pady=20, command=lambda: button_click())
+button_add = tk.Button(root, text="+", padx=39, pady=20, command=button_addition)
+button_clear = tk.Button(root, text="Clear", padx=79, pady=20, command= button_empty)
+button_equals = tk.Button(root, text="=", padx=91, pady=20, command=button_equal)
 
-button_7.grid(row=1, column=0)
-button_8.grid(row=1, column=1)
-button_9.grid(row=1, column=2)
-
-button_4.grid(row=2, column=0)
-button_5.grid(row=2, column=1)
-button_6.grid(row=2, column=2)
-
+#Put buttons on screen
 button_1.grid(row=3, column=0)
 button_2.grid(row=3, column=1)
 button_3.grid(row=3, column=2)
+button_4.grid(row=2, column=0)
+button_5.grid(row=2, column=1)
+button_6.grid(row=2, column=2)
+button_7.grid(row=1, column=0)
+button_8.grid(row=1, column=1)
+button_9.grid(row=1, column=2)
 
 button_0.grid(row=4, column=0)
 button_clear.grid(row=4, column=1, columnspan=2)
