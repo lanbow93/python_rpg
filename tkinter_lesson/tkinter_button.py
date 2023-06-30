@@ -13,4 +13,3 @@ my_button.pack(padx=10, pady=10)
 
 #Launching the program loop
 root.mainloop()
-
